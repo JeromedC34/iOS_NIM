@@ -50,7 +50,7 @@
 		88F63EAC1DD4662800B618C1 /* iOS_NIMUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS_NIMUITests.swift; sourceTree = "<group>"; };
 		88F63EAE1DD4662800B618C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88F63EBC1DD4684800B618C1 /* match.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = match.jpg; sourceTree = "<group>"; };
-		88F63EBE1DD4752400B618C1 /* NIMGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NIMGame.swift; path = iOS_NIM/NIMGame.swift; sourceTree = "<group>"; };
+		88F63EBE1DD4752400B618C1 /* NIMGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NIMGame.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,7 +81,6 @@
 		88F63E801DD4662800B618C1 = {
 			isa = PBXGroup;
 			children = (
-				88F63EBE1DD4752400B618C1 /* NIMGame.swift */,
 				88F63E8B1DD4662800B618C1 /* iOS_NIM */,
 				88F63EA01DD4662800B618C1 /* iOS_NIMTests */,
 				88F63EAB1DD4662800B618C1 /* iOS_NIMUITests */,
@@ -103,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				88F63E8C1DD4662800B618C1 /* AppDelegate.swift */,
+				88F63EBE1DD4752400B618C1 /* NIMGame.swift */,
 				88F63E8E1DD4662800B618C1 /* ViewController.swift */,
 				88F63E901DD4662800B618C1 /* Main.storyboard */,
 				88F63E931DD4662800B618C1 /* Assets.xcassets */,
