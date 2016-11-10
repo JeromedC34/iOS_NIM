@@ -10,7 +10,6 @@
 		88F63E8D1DD4662800B618C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F63E8C1DD4662800B618C1 /* AppDelegate.swift */; };
 		88F63E8F1DD4662800B618C1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F63E8E1DD4662800B618C1 /* ViewController.swift */; };
 		88F63E921DD4662800B618C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88F63E901DD4662800B618C1 /* Main.storyboard */; };
-		88F63E941DD4662800B618C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88F63E931DD4662800B618C1 /* Assets.xcassets */; };
 		88F63E971DD4662800B618C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88F63E951DD4662800B618C1 /* LaunchScreen.storyboard */; };
 		88F63EA21DD4662800B618C1 /* iOS_NIMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F63EA11DD4662800B618C1 /* iOS_NIMTests.swift */; };
 		88F63EAD1DD4662800B618C1 /* iOS_NIMUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F63EAC1DD4662800B618C1 /* iOS_NIMUITests.swift */; };
@@ -40,7 +39,6 @@
 		88F63E8C1DD4662800B618C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		88F63E8E1DD4662800B618C1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		88F63E911DD4662800B618C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		88F63E931DD4662800B618C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		88F63E961DD4662800B618C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		88F63E981DD4662800B618C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		88F63E9D1DD4662800B618C1 /* iOS_NIMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOS_NIMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,7 +103,6 @@
 				88F63EBE1DD4752400B618C1 /* NIMGame.swift */,
 				88F63E8E1DD4662800B618C1 /* ViewController.swift */,
 				88F63E901DD4662800B618C1 /* Main.storyboard */,
-				88F63E931DD4662800B618C1 /* Assets.xcassets */,
 				88F63EBC1DD4684800B618C1 /* match.jpg */,
 				88F63E951DD4662800B618C1 /* LaunchScreen.storyboard */,
 				88F63E981DD4662800B618C1 /* Info.plist */,
@@ -240,7 +237,6 @@
 			files = (
 				88F63E971DD4662800B618C1 /* LaunchScreen.storyboard in Resources */,
 				88F63EBD1DD4684800B618C1 /* match.jpg in Resources */,
-				88F63E941DD4662800B618C1 /* Assets.xcassets in Resources */,
 				88F63E921DD4662800B618C1 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

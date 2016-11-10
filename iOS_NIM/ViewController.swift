@@ -18,26 +18,28 @@ class ViewController: UIViewController {
     @IBOutlet weak var sliderNbMatches: UISlider!
     @IBOutlet weak var choiceHumanVsHuman: UISwitch!
     @IBAction func choiceChangeHumanVsHuman(_ sender: UISwitch) {
-        let alert = UIAlertController(title: "Change player 2", message: "If you change this, you will stop your current game. Do you really want to do it?", preferredStyle: UIAlertControllerStyle.alert)
-        self.present(alert, animated: true, completion: nil)
-        alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: {
-            action in
-            switch action.style{
-            default:
-                if (sender.isOn) {
-                    sender.isOn = false
-                } else {
-                    sender.isOn = true
+        if (myNIMGame?.hasStarted())! {
+            let alert = UIAlertController(title: "Change player 2", message: "If you change this, you will stop your current game.\nDo you really want to do it?", preferredStyle: UIAlertControllerStyle.alert)
+            self.present(alert, animated: true, completion: nil)
+            alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: {
+                action in
+                switch action.style{
+                default:
+                    if (sender.isOn) {
+                        sender.isOn = false
+                    } else {
+                        sender.isOn = true
+                    }
                 }
-            }
-        }))
-        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: {
-            action in
-            switch action.style{
-            default:
-                self.restartGame()
-            }
-        }))
+            }))
+            alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: {
+                action in
+                switch action.style{
+                default:
+                    self.restartGame()
+                }
+            }))
+        }
     }
     @IBAction func sliderChangeNbMatches(_ sender: UISlider) {
         let roundedValue = round(sender.value)
@@ -71,21 +73,28 @@ class ViewController: UIViewController {
         setDisplay()
         // Do any additional setup after loading the view, typically from a nib.
     }
-    private func setDisplay() {
+    private func setDisplay(reset:Bool = false) {
         labelIndicator.text = "Player \((myNIMGame?.currentPlayer)!) - Remaining \((myNIMGame?.remainingMatches)!) matches"
         for i:Int in 0..<NIMGame.maxMatches {
-            remainingMatches[i].isHidden = (i >= (myNIMGame?.remainingMatches)!)
+            if (i >= (myNIMGame?.remainingMatches)!) {
+                remainingMatches[i].alpha = 0
+            } else {
+                remainingMatches[i].alpha = 1
+            }
         }
         sliderNbMatches.maximumValue = Float((myNIMGame?.maxInput)!)
         if (sliderNbMatches.maximumValue > 0) {
             sliderNbMatches.minimumValue = 1
+        }
+        if (reset) {
+            sliderNbMatches.value = Float((myNIMGame?.maxInput)!)
         }
         sliderChangeNbMatches(sliderNbMatches)
         if (myNIMGame?.isGameOver())! {
             gameOver()
         }
     }
-    func gameOver() {
+    private func gameOver() {
         let alert = UIAlertController(title: "Game over", message: "Player \((myNIMGame?.currentPlayer)!) has lost!", preferredStyle: UIAlertControllerStyle.alert)
         self.present(alert, animated: true, completion: nil)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: {
@@ -100,8 +109,8 @@ class ViewController: UIViewController {
         return choiceHumanVsHuman.isOn
     }
     private func restartGame() {
-        myNIMGame?.newGame(humanVsHuman:isHumanVsHuman())
-        setDisplay()
+        myNIMGame?.newGame(hVsH:isHumanVsHuman())
+        setDisplay(reset:true)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

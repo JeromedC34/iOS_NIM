@@ -10,7 +10,7 @@ import Foundation
 
 class NIMGame {
     public static let maxMatches:Int = 20
-    private static let maxRemovableMatches:Int = 3
+    public static let maxRemovableMatches:Int = 3
     
     private var humanVsHuman:Bool = false
     public var remainingMatches:Int = maxMatches
@@ -21,10 +21,12 @@ class NIMGame {
         }
     }
     init(humanVsHuman:Bool) {
-        reset(hVsH: humanVsHuman)
+        newGame(hVsH: humanVsHuman)
     }
-    func newGame(humanVsHuman:Bool) {
-        reset(hVsH: humanVsHuman)
+    func newGame(hVsH:Bool) {
+        humanVsHuman = hVsH
+        remainingMatches = 20
+        currentPlayer = generateRandomNumber(min:1, max:2)
     }
     func play(nbMatchesSelected:Int) {
         if (currentPlayer == 2 && !humanVsHuman) {
@@ -36,6 +38,9 @@ class NIMGame {
     func isGameOver() -> Bool {
         return remainingMatches == 0
     }
+    func hasStarted() -> Bool {
+        return remainingMatches != NIMGame.maxMatches
+    }
     private func playIA() {
         let nbMatchesSelected:Int
         if (remainingMatches % (NIMGame.maxRemovableMatches + 1) != 1) {
@@ -44,14 +49,6 @@ class NIMGame {
             nbMatchesSelected = generateRandomNumber(min:1, max:maxInput)
         }
         removeMatches(nbMatches: nbMatchesSelected)
-    }
-    func reset(hVsH:Bool) {
-        humanVsHuman = hVsH
-        remainingMatches = 20
-        currentPlayer = generateRandomNumber(min:1, max:2)
-        if (!hVsH && currentPlayer == 2) {
-            playIA()
-        }
     }
     private func removeMatches(nbMatches:Int) {
         remainingMatches = remainingMatches - nbMatches
