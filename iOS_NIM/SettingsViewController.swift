@@ -9,14 +9,8 @@
 import UIKit
 
 class SettingsViewController: UIViewController {
-
     @IBOutlet weak var humanVsHumanSwitch: UISwitch!
     @IBOutlet weak var nbMaxMatches: UISegmentedControl!
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
     override func viewWillAppear(_ animated: Bool) {
         humanVsHumanSwitch.isOn = NIMGame.getHumanVsHumanSetting()
         if (NIMGame.getMaxNbMatchesSettings() == 10) {
@@ -25,11 +19,6 @@ class SettingsViewController: UIViewController {
             nbMaxMatches.selectedSegmentIndex = 1
         }
     }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     @IBAction func changeHumanVsHuman(_ sender: UISwitch) {
         NIMGame.setHumanVsHumanSetting(value: sender.isOn)
     }
@@ -45,6 +34,11 @@ class SettingsViewController: UIViewController {
     @IBAction func closeSettings() {
         dismiss(animated: true, completion: nil)
     }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+    }
     /*
     // MARK: - Navigation
 
@@ -54,5 +48,8 @@ class SettingsViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
 }

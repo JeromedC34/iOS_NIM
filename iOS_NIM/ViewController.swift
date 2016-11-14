@@ -49,7 +49,7 @@ class ViewController: UIViewController {
     }
     private func setDisplay(reset:Bool = false) {
         labelIndicator.text = "Player \((myNIMGame?.currentPlayer)!) - Remaining \((myNIMGame?.remainingMatches)!) matches"
-        for i:Int in 0..<NIMGame.maxMatches {
+        for i:Int in 0..<NIMGame.limitMaxMatches {
             if (i >= (myNIMGame?.remainingMatches)!) {
                 remainingMatches[i].alpha = 0
             } else {
