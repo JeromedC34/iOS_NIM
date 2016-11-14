@@ -17,30 +17,6 @@ class ViewController: UIViewController {
     @IBOutlet var remainingMatches: [UIImageView]!
     @IBOutlet weak var sliderNbMatches: UISlider!
     @IBOutlet weak var choiceHumanVsHuman: UISwitch!
-    @IBAction func choiceChangeHumanVsHuman(_ sender: UISwitch) {
-        if (myNIMGame?.hasStarted())! {
-            let alert = UIAlertController(title: "Change player 2", message: "If you change this, you will stop your current game.\nDo you really want to do it?", preferredStyle: UIAlertControllerStyle.alert)
-            self.present(alert, animated: true, completion: nil)
-            alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: {
-                action in
-                switch action.style{
-                default:
-                    if (sender.isOn) {
-                        sender.isOn = false
-                    } else {
-                        sender.isOn = true
-                    }
-                }
-            }))
-            alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: {
-                action in
-                switch action.style{
-                default:
-                    self.restartGame()
-                }
-            }))
-        }
-    }
     @IBAction func sliderChangeNbMatches(_ sender: UISlider) {
         let roundedValue = round(sender.value)
         sender.value = roundedValue
@@ -67,11 +43,9 @@ class ViewController: UIViewController {
         myNIMGame?.play(nbMatchesSelected: Int(sliderNbMatches.value))
         setDisplay()
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        myNIMGame = NIMGame(humanVsHuman:isHumanVsHuman())
-        setDisplay()
-        // Do any additional setup after loading the view, typically from a nib.
+    required init?(coder aDecoder: NSCoder) {
+        myNIMGame = NIMGame()
+        super.init(coder: aDecoder)
     }
     private func setDisplay(reset:Bool = false) {
         labelIndicator.text = "Player \((myNIMGame?.currentPlayer)!) - Remaining \((myNIMGame?.remainingMatches)!) matches"
@@ -105,16 +79,47 @@ class ViewController: UIViewController {
             }
         }))
     }
+    @IBAction func displaySettings() {
+        if (myNIMGame?.hasStarted())! {
+            let alert = UIAlertController(title: "Change settings", message: "Your game will be restarted.\nDo you really want to do it?", preferredStyle: UIAlertControllerStyle.alert)
+            self.present(alert, animated: true, completion: nil)
+            alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: {
+                action in
+                switch action.style{
+                default:
+                    self.showSettings()
+                }
+            }))
+        } else {
+            showSettings()
+        }
+
+    }
+    private func showSettings() {
+        let settingsVC = self.storyboard?.instantiateViewController(withIdentifier: "SettingsViewController")
+        if (settingsVC != nil) {
+            present(settingsVC!, animated: true, completion: nil)
+        }
+    }
     private func isHumanVsHuman() -> Bool {
-        return choiceHumanVsHuman.isOn
+        let userDefaults:UserDefaults = UserDefaults.standard
+        return userDefaults.bool(forKey: "choiceHumanVsHuman")
     }
     private func restartGame() {
-        myNIMGame?.newGame(hVsH:isHumanVsHuman())
+        myNIMGame?.newGame()
         setDisplay(reset:true)
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        restartGame()
     }
 }
 

@@ -9,10 +9,9 @@
 import Foundation
 
 class NIMGame {
-    public static let maxMatches:Int = 20
+    public static let maxMatches:Int = NIMGame.getMaxNbMatchesSettings()
     public static let maxRemovableMatches:Int = 3
     
-    private var humanVsHuman:Bool = false
     public var remainingMatches:Int = maxMatches
     public var currentPlayer:Int = 1
     public var maxInput:Int {
@@ -20,23 +19,19 @@ class NIMGame {
             return min(remainingMatches, NIMGame.maxRemovableMatches)
         }
     }
-    init(humanVsHuman:Bool) {
-        newGame(hVsH: humanVsHuman)
-    }
-    func newGame(hVsH:Bool) {
-        humanVsHuman = hVsH
-        remainingMatches = 20
+    func newGame() {
+        remainingMatches = NIMGame.getMaxNbMatchesSettings()
         currentPlayer = generateRandomNumber(min:1, max:2)
     }
     func play(nbMatchesSelected:Int) {
-        if (currentPlayer == 2 && !humanVsHuman) {
+        if (currentPlayer == 2 && !NIMGame.getHumanVsHumanSetting()) {
             playIA()
         } else {
             removeMatches(nbMatches: nbMatchesSelected)
         }
     }
     func isGameOver() -> Bool {
-        return remainingMatches == 0
+        return remainingMatches <= 0
     }
     func hasStarted() -> Bool {
         return remainingMatches != NIMGame.maxMatches
@@ -63,5 +58,25 @@ class NIMGame {
     private func generateRandomNumber(min:Int, max:Int) -> Int {
         let range = max - min + 1
         return Int(arc4random_uniform(UInt32(range))) + min
+    }
+    static func setHumanVsHumanSetting(value:Bool) {
+        let userDefaults:UserDefaults = UserDefaults.standard
+        userDefaults.set(value, forKey: "choiceHumanVsHuman")
+    }
+    static func getHumanVsHumanSetting() -> Bool {
+        let userDefaults:UserDefaults = UserDefaults.standard
+        return userDefaults.bool(forKey: "choiceHumanVsHuman")
+    }
+    static func setMaxNbMatchesSettings(value:Int) {
+        let userDefaults:UserDefaults = UserDefaults.standard
+        userDefaults.set(value, forKey: "maxNbMatches")
+    }
+    static func getMaxNbMatchesSettings() -> Int {
+        let userDefaults:UserDefaults = UserDefaults.standard
+        var maxNbMatches:Int = userDefaults.integer(forKey: "maxNbMatches")
+        if (maxNbMatches == 0) {
+            maxNbMatches = 20
+        }
+        return maxNbMatches
     }
 }
