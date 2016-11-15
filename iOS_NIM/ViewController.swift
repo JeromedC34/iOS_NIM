@@ -48,7 +48,7 @@ class ViewController: UIViewController {
         super.init(coder: aDecoder)
     }
     private func setDisplay(reset:Bool = false) {
-        labelIndicator.text = "Player \((myNIMGame?.currentPlayer)!) - Remaining \((myNIMGame?.remainingMatches)!) matches"
+        labelIndicator.text = "\((myNIMGame?.getCurrentPlayerName())!) - Remaining \((myNIMGame?.remainingMatches)!) matches"
         for i:Int in 0..<NIMGame.limitMaxMatches {
             if (i >= (myNIMGame?.remainingMatches)!) {
                 remainingMatches[i].alpha = 0
@@ -69,7 +69,7 @@ class ViewController: UIViewController {
         }
     }
     private func gameOver() {
-        let alert = UIAlertController(title: "Game over", message: "Player \((myNIMGame?.currentPlayer)!) has lost!", preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Game over", message: "\((myNIMGame?.getCurrentPlayerName())!) has lost!", preferredStyle: UIAlertControllerStyle.alert)
         self.present(alert, animated: true, completion: nil)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: {
             action in
@@ -100,6 +100,12 @@ class ViewController: UIViewController {
         let settingsVC = self.storyboard?.instantiateViewController(withIdentifier: "SettingsViewController")
         if (settingsVC != nil) {
             present(settingsVC!, animated: true, completion: nil)
+        }
+    }
+    @IBAction func displayScores() {
+        let scoresVC = self.storyboard?.instantiateViewController(withIdentifier: "ScoresViewController")
+        if (scoresVC != nil) {
+            present(scoresVC!, animated: true, completion: nil)
         }
     }
     private func isHumanVsHuman() -> Bool {

@@ -11,16 +11,40 @@ import UIKit
 class SettingsViewController: UIViewController {
     @IBOutlet weak var humanVsHumanSwitch: UISwitch!
     @IBOutlet weak var nbMaxMatches: UISegmentedControl!
+    @IBOutlet weak var player1TextField: UITextField!
+    @IBOutlet weak var player2TextField: UITextField!
+    @IBOutlet weak var whoPlaysFirst: UISegmentedControl!
+    @IBAction func clearSettings() {
+        NIMGame.resetSettings()
+        setDisplay()
+    }
     override func viewWillAppear(_ animated: Bool) {
+        setDisplay()
+    }
+    @IBAction func changeHumanVsHuman(_ sender: UISwitch) {
+        NIMGame.setHumanVsHumanSetting(value: sender.isOn)
+        checkIA()
+    }
+    private func setDisplay() {
         humanVsHumanSwitch.isOn = NIMGame.getHumanVsHumanSetting()
         if (NIMGame.getMaxNbMatchesSettings() == 10) {
             nbMaxMatches.selectedSegmentIndex = 0
         } else {
             nbMaxMatches.selectedSegmentIndex = 1
         }
+        player1TextField.text = NIMGame.getPlayer1Name()
+        player2TextField.text = NIMGame.getPlayer2Name()
+        whoPlaysFirst.selectedSegmentIndex = NIMGame.getWhoPlaysFirst() - 1
+        checkIA()
     }
-    @IBAction func changeHumanVsHuman(_ sender: UISwitch) {
-        NIMGame.setHumanVsHumanSetting(value: sender.isOn)
+    private func checkIA() {
+        if (NIMGame.getHumanVsHumanSetting()) {
+            player2TextField.isEnabled = true
+            player2TextField.text = NIMGame.getPlayer2Name()
+        } else {
+            player2TextField.isEnabled = false
+            player2TextField.text = NIMGame.getPlayer2Name()
+        }
     }
     @IBAction func changeMaxNbMatches(_ sender: UISegmentedControl) {
         let maxNbMatches:Int
@@ -30,6 +54,17 @@ class SettingsViewController: UIViewController {
             maxNbMatches = 20
         }
         NIMGame.setMaxNbMatchesSettings(value: maxNbMatches)
+    }
+    @IBAction func changePlayer1Name(_ sender: UITextField) {
+        NIMGame.setPlayer1Name(value: sender.text!)
+    }
+    @IBAction func changePlayer2Name(_ sender: UITextField) {
+        NIMGame.setPlayer2Name(value: sender.text!)
+    }
+    @IBAction func changeWhoPlaysFirst(_ sender: UISegmentedControl) {
+        let whoPlaysFirst:Int
+        whoPlaysFirst = sender.selectedSegmentIndex + 1
+        NIMGame.setWhoPlaysFirst(value: whoPlaysFirst)
     }
     @IBAction func closeSettings() {
         dismiss(animated: true, completion: nil)
