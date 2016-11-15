@@ -27,41 +27,87 @@ class iOS_NIMUITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
+    // Reset all data
+    private func resetData() {
+        let app = XCUIApplication()
+        app.buttons["settingsButton"].tap()
+        app.buttons["resetSettingsButton"].tap()
+        app.buttons["closeSettingsButton"].tap()
+        app.buttons["scoresButton"].tap()
+        app.buttons["clearScoresButton"].tap()
+        app.buttons["closeScoresButton"].tap()
+    }
     func testExample() {
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         
         let app = XCUIApplication()
-        let playButton = app.buttons["Play"]
+        resetData()
         
+        let playButton = app.buttons["playButton"]
+        
+        XCTAssertTrue(app.staticTexts["labelGameState"].label == "Player 1 - Remaining 20 matches")
         playButton.tap()
-        XCTAssertTrue(app.staticTexts["labelGameState"].label == "Player 2 - Remaining 17 matches" || app.staticTexts["labelGameState"].label == "Player 1 - Remaining 17 matches")
+        XCTAssertTrue(app.staticTexts["labelGameState"].label == "Player 2 - Remaining 17 matches")
+        playButton.tap()
+        XCTAssertTrue(app.staticTexts["labelGameState"].label == "Player 1 - Remaining 14 matches")
+        let slider100 = app.sliders["100%"]
+        let slider50 = app.sliders["50%"]
+        let slider0 = app.sliders["0%"]
+        slider100.adjust(toNormalizedSliderPosition: 0.5)
+        playButton.tap()
+        XCTAssertTrue(app.staticTexts["labelGameState"].label == "Player 2 - Remaining 12 matches")
+        playButton.tap()
+        XCTAssertTrue(app.staticTexts["labelGameState"].label == "Player 1 - Remaining 10 matches")
+        slider50.adjust(toNormalizedSliderPosition: 0)
+        playButton.tap()
+        XCTAssertTrue(app.staticTexts["labelGameState"].label == "Player 2 - Remaining 9 matches")
+        playButton.tap()
+        XCTAssertTrue(app.staticTexts["labelGameState"].label == "Player 1 - Remaining 8 matches")
+        slider0.adjust(toNormalizedSliderPosition: 0.5)
+        
+        let changeSettingsAlert = app.alerts["Change settings"]
+        app.buttons["settingsButton"].tap()
+        changeSettingsAlert.buttons["No"].tap()
+        app.buttons["settingsButton"].tap()
+        changeSettingsAlert.buttons["Yes"].tap()
+        app.buttons["closeSettingsButton"].tap()
+        XCTAssertTrue(app.staticTexts["labelGameState"].label == "Player 1 - Remaining 20 matches")
+        playButton.tap()
+        playButton.tap()
+        playButton.tap()
+        playButton.tap()
+        playButton.tap()
+        playButton.tap()
+        playButton.tap()
+        app.alerts["Game over"].buttons["Ok"].tap()
+        app.buttons["scoresButton"].tap()
+        XCTAssertTrue(app.textViews["scoresTextView"].value as! String == "Player 1: 0\nPlayer 2: 10\n")
+        app.buttons["closeScoresButton"].tap()
+        playButton.tap()
+        playButton.tap()
+        playButton.tap()
+        playButton.tap()
+        playButton.tap()
+        playButton.tap()
+        playButton.tap()
+        app.alerts["Game over"].buttons["Ok"].tap()
+        app.buttons["scoresButton"].tap()
+        XCTAssertTrue(app.textViews["scoresTextView"].value as! String == "Player 1: 0\nPlayer 2: 20\n")
         
         /*
          let switch2 = app.switches["1"]
-         let changePlayer2Alert = app.alerts["Change player 2"]
-         let slider100 = app.sliders["100%"]
-         let slider50 = app.sliders["50%"]
-         let slider0 = app.sliders["0%"]
-         
          switch2.tap()
-         slider100.swipeLeft()
-         slider50.swipeRight()
-         slider0.swipeRight()
-         
-         playButton.tap()
-         
-         changePlayer2Alert.buttons["No"].tap()
-         changePlayer2Alert.buttons["Yes"].tap()
-         
-         app.staticTexts["Player 1 - Remaining 20 matches"].tap()
-         
-         app.images["match19"].tap()
+         app.buttons["10"].tap()
+         app.switches["0"].tap()
+         app.scrollViews.otherElements.icons["iOS_NIM"].tap()
          app.images["match20"].tap()
-         app.images["match13"].tap()
+         app.images["match2"].tap()
+         app.images["match1"].tap()
+         let player1nametextfieldTextField = app.textFields["player1NameTextField"]
+         player1nametextfieldTextField.tap()
+         player1nametextfieldTextField.typeText("a")
+         app.textFields["player2NameTextField"].tap()
          */
-        
     }
-    
 }

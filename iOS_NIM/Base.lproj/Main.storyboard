@@ -193,6 +193,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6s2-d3-nrc">
                                 <rect key="frame" x="163" y="518" width="49" height="38"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <accessibility key="accessibilityConfiguration" identifier="playButton"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                                 <state key="normal" title="Play"/>
                                 <connections>
@@ -202,6 +203,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PyP-5i-921">
                                 <rect key="frame" x="155" y="578" width="64" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" identifier="settingsButton"/>
                                 <state key="normal" title="Réglages"/>
                                 <connections>
                                     <action selector="displaySettings" destination="BYZ-38-t0r" eventType="touchUpInside" id="CtS-hA-MfZ"/>
@@ -210,6 +212,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vIc-GS-PZH">
                                 <rect key="frame" x="162" y="617" width="48" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" identifier="scoresButton"/>
                                 <state key="normal" title="Scores"/>
                                 <connections>
                                     <action selector="displayScores" destination="BYZ-38-t0r" eventType="touchUpInside" id="pLc-Dp-mf1"/>
@@ -338,6 +341,7 @@
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BCI-aa-aEx">
                                 <rect key="frame" x="238" y="183.5" width="121" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="player1NameTextField"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -347,6 +351,7 @@
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2kY-wC-XBX">
                                 <rect key="frame" x="238" y="233.5" width="121" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="player2NameTextField"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -373,6 +378,7 @@
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KtZ-Tb-wzi">
                                 <rect key="frame" x="139" y="617" width="98" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="resetSettingsButton"/>
                                 <state key="normal" title="Reset settings"/>
                                 <connections>
                                     <action selector="clearSettings" destination="zwz-lI-VaB" eventType="touchUpInside" id="qSL-aT-WXX"/>
@@ -380,6 +386,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tuz-6S-VrY">
                                 <rect key="frame" x="163" y="354.5" width="49" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="closeSettingsButton"/>
                                 <state key="normal" title="Fermer"/>
                                 <connections>
                                     <action selector="closeSettings" destination="zwz-lI-VaB" eventType="touchUpInside" id="ExV-iu-jUs"/>
@@ -452,11 +459,13 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="uhF-wY-SJ1">
                                 <rect key="frame" x="16" y="85" width="343" height="462"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <accessibility key="accessibilityConfiguration" identifier="scoresTextView"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6hb-ZB-rtf">
                                 <rect key="frame" x="144.5" y="617" width="86" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="clearScoresButton"/>
                                 <state key="normal" title="Clear scores"/>
                                 <connections>
                                     <action selector="resetScores" destination="Un6-Ge-MVu" eventType="touchUpInside" id="vPH-de-TkU"/>
@@ -464,6 +473,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mqt-AF-lW6">
                                 <rect key="frame" x="163" y="567" width="49" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="closeScoresButton"/>
                                 <state key="normal" title="Fermer"/>
                                 <connections>
                                     <action selector="closeScores" destination="Un6-Ge-MVu" eventType="touchUpInside" id="NFw-5P-9Zv"/>
