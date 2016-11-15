@@ -21,8 +21,9 @@ class ScoresViewController: UIViewController {
     private func setDisplay() {
         let scores:[String:Int]? = NIMGame.getScores()
         if (scores != nil) {
+            let scoresSorted = scores?.sorted{ $0.value > $1.value }
             scoresTextView.text = ""
-            for (key, value) in scores! {
+            for (key, value) in scoresSorted! {
                 scoresTextView.text = scoresTextView.text! + "\(key): \(value)\n"
             }
         } else {
