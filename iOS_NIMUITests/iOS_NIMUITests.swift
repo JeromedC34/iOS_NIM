@@ -36,6 +36,7 @@ class iOS_NIMUITests: XCTestCase {
 
         app.buttons["settingsButton"].tap()
         app.buttons["resetSettingsButton"].tap()
+        app.alerts["Reset settings"].buttons["Yes"].tap()
         
         XCTAssertTrue("\(app.switches["humanVsHumanSwitch"].value!)" == "1")
         XCTAssertTrue(app.segmentedControls.buttons["20"].isSelected)
@@ -46,6 +47,7 @@ class iOS_NIMUITests: XCTestCase {
         app.navigationBars["Settings"].buttons["NIM game"].tap()
         app.buttons["scoresButton"].tap()
         app.buttons["clearScoresButton"].tap()
+        app.alerts["Reset scores"].buttons["Yes"].tap()
         app.navigationBars["Scores"].buttons["NIM game"].tap()
         
         let playButton = app.buttons["playButton"]
