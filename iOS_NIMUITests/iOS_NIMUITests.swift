@@ -27,22 +27,26 @@ class iOS_NIMUITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    // Reset all data
-    private func resetData() {
-        let app = XCUIApplication()
-        app.buttons["settingsButton"].tap()
-        app.buttons["resetSettingsButton"].tap()
-        app.buttons["closeSettingsButton"].tap()
-        app.buttons["scoresButton"].tap()
-        app.buttons["clearScoresButton"].tap()
-        app.buttons["closeScoresButton"].tap()
-    }
+
     func testExample() {
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         
         let app = XCUIApplication()
-        resetData()
+
+        app.buttons["settingsButton"].tap()
+        app.buttons["resetSettingsButton"].tap()
+        
+        XCTAssertTrue("\(app.switches["humanVsHumanSwitch"].value!)" == "1")
+        XCTAssertTrue(app.segmentedControls.buttons["20"].isSelected)
+        XCTAssertTrue(app.textFields["player1NameTextField"].value as! String == "Player 1")
+        XCTAssertTrue(app.textFields["player2NameTextField"].value as! String == "Player 2")
+        XCTAssertTrue(app.segmentedControls.buttons["Player 1"].isSelected)
+        
+        app.navigationBars["Settings"].buttons["NIM game"].tap()
+        app.buttons["scoresButton"].tap()
+        app.buttons["clearScoresButton"].tap()
+        app.navigationBars["Scores"].buttons["NIM game"].tap()
         
         let playButton = app.buttons["playButton"]
         
@@ -71,7 +75,7 @@ class iOS_NIMUITests: XCTestCase {
         changeSettingsAlert.buttons["No"].tap()
         app.buttons["settingsButton"].tap()
         changeSettingsAlert.buttons["Yes"].tap()
-        app.buttons["closeSettingsButton"].tap()
+        app.navigationBars["Settings"].buttons["NIM game"].tap()
         XCTAssertTrue(app.staticTexts["labelGameState"].label == "Player 1 - Remaining 20 matches")
         playButton.tap()
         playButton.tap()
@@ -82,8 +86,8 @@ class iOS_NIMUITests: XCTestCase {
         playButton.tap()
         app.alerts["Game over"].buttons["Ok"].tap()
         app.buttons["scoresButton"].tap()
-        XCTAssertTrue(app.textViews["scoresTextView"].value as! String == "Player 1: 0\nPlayer 2: 10\n")
-        app.buttons["closeScoresButton"].tap()
+        XCTAssertTrue(app.textViews["scoresTextView"].value as! String == "Player 2: 10\nPlayer 1: 0\n")
+        app.navigationBars["Scores"].buttons["NIM game"].tap()
         playButton.tap()
         playButton.tap()
         playButton.tap()
@@ -93,7 +97,7 @@ class iOS_NIMUITests: XCTestCase {
         playButton.tap()
         app.alerts["Game over"].buttons["Ok"].tap()
         app.buttons["scoresButton"].tap()
-        XCTAssertTrue(app.textViews["scoresTextView"].value as! String == "Player 1: 0\nPlayer 2: 20\n")
+        XCTAssertTrue(app.textViews["scoresTextView"].value as! String == "Player 2: 20\nPlayer 1: 0\n")
         
         /*
          let switch2 = app.switches["1"]
@@ -104,7 +108,6 @@ class iOS_NIMUITests: XCTestCase {
          app.images["match20"].tap()
          app.images["match2"].tap()
          app.images["match1"].tap()
-         let player1nametextfieldTextField = app.textFields["player1NameTextField"]
          player1nametextfieldTextField.tap()
          player1nametextfieldTextField.typeText("a")
          app.textFields["player2NameTextField"].tap()

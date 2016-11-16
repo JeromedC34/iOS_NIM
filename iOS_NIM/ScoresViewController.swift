@@ -15,8 +15,17 @@ class ScoresViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     @IBAction func resetScores() {
-        NIMGame.resetScores()
-        setDisplay()
+        let alert = UIAlertController(title: "Reset scores", message: "Your scores will be lost.\nDo you really want to do it?", preferredStyle: UIAlertControllerStyle.alert)
+        self.present(alert, animated: true, completion: nil)
+        alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: {
+            action in
+            switch action.style{
+            default:
+                NIMGame.resetScores()
+                self.setDisplay()
+            }
+        }))
     }
     private func setDisplay() {
         let scores:[String:Int]? = NIMGame.getScores()

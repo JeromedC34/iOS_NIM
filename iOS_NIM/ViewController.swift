@@ -98,8 +98,12 @@ class ViewController: UIViewController {
     }
     private func showSettings() {
         let settingsVC = self.storyboard?.instantiateViewController(withIdentifier: "SettingsViewController")
-        if (settingsVC != nil) {
-            present(settingsVC!, animated: true, completion: nil)
+        if let navController = self.navigationController {
+            navController.pushViewController(settingsVC!, animated: true)
+        } else {
+            if (settingsVC != nil) {
+                present(settingsVC!, animated: true, completion: nil)
+            }
         }
     }
     @IBAction func displayScores() {

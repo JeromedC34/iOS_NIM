@@ -8,15 +8,24 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var humanVsHumanSwitch: UISwitch!
     @IBOutlet weak var nbMaxMatches: UISegmentedControl!
     @IBOutlet weak var player1TextField: UITextField!
     @IBOutlet weak var player2TextField: UITextField!
     @IBOutlet weak var whoPlaysFirst: UISegmentedControl!
-    @IBAction func clearSettings() {
-        NIMGame.resetSettings()
-        setDisplay()
+    @IBAction func resetSettings() {
+        let alert = UIAlertController(title: "Reset settings", message: "Your settings will be lost.\nDo you really want to do it?", preferredStyle: UIAlertControllerStyle.alert)
+        self.present(alert, animated: true, completion: nil)
+        alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: {
+            action in
+            switch action.style{
+            default:
+                NIMGame.resetSettings()
+                self.setDisplay()
+            }
+        }))
     }
     override func viewWillAppear(_ animated: Bool) {
         setDisplay()
@@ -69,10 +78,19 @@ class SettingsViewController: UIViewController {
     @IBAction func closeSettings() {
         dismiss(animated: true, completion: nil)
     }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        player1TextField.delegate = self
+        player2TextField.delegate = self
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        switch (textField.tag) {
+        case 1, 2:
+            textField.text = textField.text?.replacingOccurrences(of: " ", with: "_")
+        default: break
+            // RAS
+        }
     }
     /*
     // MARK: - Navigation
