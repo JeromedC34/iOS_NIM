@@ -10,7 +10,7 @@ import UIKit
 
 class SettingsViewController: UIViewController, UITextFieldDelegate {
     private var hasChangedSettings:Bool = false
-    private var myNIMGame:NIMGame? = nil
+    private var _game:NIMGame? = nil
     @IBOutlet weak var humanVsHumanSwitch: UISwitch!
     @IBOutlet weak var nbMaxMatches: UISegmentedControl!
     @IBOutlet weak var player1TextField: UITextField!
@@ -38,8 +38,8 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         NIMGame.setHumanVsHumanSetting(value: sender.isOn)
         checkIA()
     }
-    func setGame(myNIMGame:NIMGame) {
-        self.myNIMGame = myNIMGame
+    func setGame(game:NIMGame) {
+        self._game = game
     }
     private func setDisplay() {
         humanVsHumanSwitch.isOn = NIMGame.getHumanVsHumanSetting()
@@ -95,7 +95,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     }
     override func viewWillDisappear(_ animated: Bool) {
         if hasChangedSettings,
-            let myRunningGame = self.myNIMGame {
+            let myRunningGame = self._game {
             myRunningGame.newGame()
         }
     }

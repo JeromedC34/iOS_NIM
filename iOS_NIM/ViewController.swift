@@ -9,7 +9,6 @@
 import UIKit
 
 class ViewController: UIViewController {
-    private var myNIMGame:NIMGame?
     @IBOutlet weak var labelIndicator: UILabel!
     @IBOutlet weak var chooseMatch1: UIImageView!
     @IBOutlet weak var chooseMatch2: UIImageView!
@@ -40,12 +39,65 @@ class ViewController: UIViewController {
         }
     }
     @IBAction func btnPlay(_ sender: UIButton) {
-        myNIMGame?.play(nbMatchesSelected: Int(sliderNbMatches.value))
+        _game.play(nbMatchesSelected: Int(sliderNbMatches.value))
         setDisplay()
+    }
+    required init?(coder aDecoder: NSCoder) {
+        _game = NIMGame()
+        super.init(coder: aDecoder)
+    }
+    private var _game:NIMGame
+    private func setDisplay(reset:Bool = false) {
+        labelIndicator.text = "\(_game.getCurrentPlayerName()) - Remaining  \(_game.remainingMatches) matches"
+        for i:Int in 0..<_game.limitMaxMatches {
+            if (i >= _game.remainingMatches) {
+                remainingMatches[i].alpha = 0
+            } else {
+                remainingMatches[i].alpha = 1
+            }
+        }
+        sliderNbMatches.maximumValue = Float(_game.maxInput)
+        if (sliderNbMatches.maximumValue > 0) {
+            sliderNbMatches.minimumValue = 1
+        }
+        if (reset) {
+            sliderNbMatches.value = Float(_game.maxInput)
+        }
+        sliderChangeNbMatches(sliderNbMatches)
+        if (_game.isGameOver()) {
+            gameOver()
+        }
+    }
+    private func gameOver() {
+        let alert = UIAlertController(title: "Game over", message: "\((_game.winnerName)!) has won!", preferredStyle: UIAlertControllerStyle.alert)
+        self.present(alert, animated: true, completion: nil)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: {
+            action in
+            switch action.style{
+            default:
+                self.restartGame()
+            }
+        }))
+    }
+    private func showSettings() {
+        let settingsVC:SettingsViewController = self.storyboard?.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
+        settingsVC.setGame(game: _game)
+        if let navController = self.navigationController {
+            navController.pushViewController(settingsVC, animated: true)
+        }
+    }
+    private func restartGame() {
+        _game.newGame()
+        setDisplay(reset:true)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let scoresVC = segue.destination as? ScoresViewController {
+            scoresVC.game = _game
+        }
     }
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == "showSettingsSegue" {
-            if (myNIMGame?.hasStarted())! {
+            if (_game.hasStarted()) {
                 let alert = UIAlertController(title: "Change settings", message: "Your game will be restarted if you change any setting.\nDo you really want to do it?", preferredStyle: UIAlertControllerStyle.alert)
                 self.present(alert, animated: true, completion: nil)
                 alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: nil))
@@ -63,59 +115,6 @@ class ViewController: UIViewController {
         } else {
             return true
         }
-    }
-    required init?(coder aDecoder: NSCoder) {
-        myNIMGame = NIMGame()
-        super.init(coder: aDecoder)
-    }
-    private func setDisplay(reset:Bool = false) {
-        labelIndicator.text = "\((myNIMGame?.getCurrentPlayerName())!) - Remaining \((myNIMGame?.remainingMatches)!) matches"
-        for i:Int in 0..<NIMGame.limitMaxMatches {
-            if (i >= (myNIMGame?.remainingMatches)!) {
-                remainingMatches[i].alpha = 0
-            } else {
-                remainingMatches[i].alpha = 1
-            }
-        }
-        sliderNbMatches.maximumValue = Float((myNIMGame?.maxInput)!)
-        if (sliderNbMatches.maximumValue > 0) {
-            sliderNbMatches.minimumValue = 1
-        }
-        if (reset) {
-            sliderNbMatches.value = Float((myNIMGame?.maxInput)!)
-        }
-        sliderChangeNbMatches(sliderNbMatches)
-        if (myNIMGame?.isGameOver())! {
-            gameOver()
-        }
-    }
-    private func gameOver() {
-        let alert = UIAlertController(title: "Game over", message: "\((myNIMGame?.winnerName)!) has won!", preferredStyle: UIAlertControllerStyle.alert)
-        self.present(alert, animated: true, completion: nil)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: {
-            action in
-            switch action.style{
-            default:
-                self.restartGame()
-            }
-        }))
-    }
-    private func showSettings() {
-        let settingsVC:SettingsViewController = self.storyboard?.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
-        if let currentNIMGame = myNIMGame {
-            settingsVC.setGame(myNIMGame: currentNIMGame)
-        }
-        if let navController = self.navigationController {
-            navController.pushViewController(settingsVC, animated: true)
-        }
-    }
-    private func isHumanVsHuman() -> Bool {
-        let userDefaults:UserDefaults = UserDefaults.standard
-        return userDefaults.bool(forKey: "choiceHumanVsHuman")
-    }
-    func restartGame() {
-        myNIMGame?.newGame()
-        setDisplay(reset:true)
     }
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -9,12 +9,18 @@
 import Foundation
 
 class NIMGame {
-    public static let limitMaxMatches:Int = 20
+    private static let _limitMaxMatches:Int = 20
     public static var maxMatches:Int = NIMGame.getMaxNbMatchesSettings()
     public static var maxRemovableMatches:Int = 3
     public static let playerIAName:String = "IA"
     public static let player1NameDefault:String = "Player 1"
     public static let player2NameDefault:String = "Player 2"
+    private static let PLAYER_1_NAME_KEY:String = "player1Name"
+    private static let PLAYER_2_NAME_KEY:String = "player2Name"
+    private static let CHOICE_HUMAN_VS_HUMAN_KEY:String = "choiceHumanVsHuman"
+    private static let MAX_NB_MATCHES_KEY:String = "maxNbMatches"
+    private static let WHO_PLAYS_FIRST_KEY:String = "whoPlaysFirst"
+    private static let SCORES_KEY:String = "scores"
     
     public var remainingMatches:Int = maxMatches
     public var currentPlayer:Int = 1
@@ -22,6 +28,9 @@ class NIMGame {
         get{
             return min(remainingMatches, NIMGame.maxRemovableMatches)
         }
+    }
+    public var limitMaxMatches:Int {
+        return NIMGame._limitMaxMatches
     }
     public var winnerName:String? {
         get{
@@ -31,6 +40,8 @@ class NIMGame {
                 } else {
                     return NIMGame.getPlayer1Name()
                 }
+            } else {
+                return nil
             }
         }
     }
@@ -57,15 +68,15 @@ class NIMGame {
     }
     static func resetSettings() {
         let userDefaults:UserDefaults = UserDefaults.standard
-        userDefaults.removeObject(forKey: "player1Name")
-        userDefaults.removeObject(forKey: "player2Name")
-        userDefaults.removeObject(forKey: "choiceHumanVsHuman")
-        userDefaults.removeObject(forKey: "maxNbMatches")
-        userDefaults.removeObject(forKey: "whoPlaysFirst")
+        userDefaults.removeObject(forKey: NIMGame.PLAYER_1_NAME_KEY)
+        userDefaults.removeObject(forKey: NIMGame.PLAYER_2_NAME_KEY)
+        userDefaults.removeObject(forKey: NIMGame.CHOICE_HUMAN_VS_HUMAN_KEY)
+        userDefaults.removeObject(forKey: NIMGame.MAX_NB_MATCHES_KEY)
+        userDefaults.removeObject(forKey: NIMGame.WHO_PLAYS_FIRST_KEY)
     }
-    static func resetScores() {
+    func resetScores() {
         let userDefaults:UserDefaults = UserDefaults.standard
-        userDefaults.removeObject(forKey: "scores")
+        userDefaults.removeObject(forKey: NIMGame.SCORES_KEY)
     }
     private func playIA() {
         let nbMatchesSelected:Int
@@ -88,20 +99,20 @@ class NIMGame {
 			saveScore()
 		}
     }
-	static func getScores() -> [String:Int]? {
+	func getScores() -> [String:Int]? {
         let userDefaults:UserDefaults = UserDefaults.standard
         var result:[String:Int]?
-        if (userDefaults.dictionary(forKey: "scores") as? [String : Int] != nil) {
-            result = userDefaults.dictionary(forKey: "scores") as? [String : Int]
+        if (userDefaults.dictionary(forKey: NIMGame.SCORES_KEY) as? [String : Int] != nil) {
+            result = userDefaults.dictionary(forKey: NIMGame.SCORES_KEY) as? [String : Int]
         }
         return result
 	}
 	static func setScores(scores:[String:Int]) {
         let userDefaults:UserDefaults = UserDefaults.standard
-        userDefaults.set(scores, forKey: "scores")
+        userDefaults.set(scores, forKey: SCORES_KEY)
 	}
 	private func saveScore() {
-		var scores:[String:Int]? = NIMGame.getScores()
+		var scores:[String:Int]? = self.getScores()
 		let player1Name:String = NIMGame.getPlayer1Name()
 		let player2Name:String = NIMGame.getPlayer2Name()
 		let addPlayer1:Int
@@ -136,32 +147,32 @@ class NIMGame {
     }
     static func setPlayer1Name(value:String) {
         let userDefaults:UserDefaults = UserDefaults.standard
-        userDefaults.set(value, forKey: "player1Name")
+        userDefaults.set(value, forKey: PLAYER_1_NAME_KEY)
     }
 	static func getPlayer1Name() -> String {
         let userDefaults:UserDefaults = UserDefaults.standard
         var playerName:String
         // Sets the default value if not already set
-        if (userDefaults.string(forKey: "player1Name") == nil) {
+        if (userDefaults.string(forKey: PLAYER_1_NAME_KEY) == nil) {
             playerName = player1NameDefault
         } else {
-            playerName = userDefaults.string(forKey: "player1Name")!
+            playerName = userDefaults.string(forKey: PLAYER_1_NAME_KEY)!
         }
 		return playerName
 	}
     static func setPlayer2Name(value:String) {
         let userDefaults:UserDefaults = UserDefaults.standard
-        userDefaults.set(value, forKey: "player2Name")
+        userDefaults.set(value, forKey: PLAYER_2_NAME_KEY)
     }
     static func getPlayer2Name() -> String {
         let userDefaults:UserDefaults = UserDefaults.standard
         var playerName:String
         if (NIMGame.getHumanVsHumanSetting()) {
             // Sets the default value if not already set
-            if (userDefaults.string(forKey: "player2Name") == nil || userDefaults.string(forKey: "player2Name") == playerIAName) {
+            if (userDefaults.string(forKey: PLAYER_2_NAME_KEY) == nil || userDefaults.string(forKey: PLAYER_2_NAME_KEY) == playerIAName) {
                 playerName = player2NameDefault
             } else {
-                playerName = userDefaults.string(forKey: "player2Name")!
+                playerName = userDefaults.string(forKey: PLAYER_2_NAME_KEY)!
             }
         } else {
             playerName = playerIAName
@@ -179,23 +190,23 @@ class NIMGame {
     }
     static func setHumanVsHumanSetting(value:Bool) {
         let userDefaults:UserDefaults = UserDefaults.standard
-        userDefaults.set(value, forKey: "choiceHumanVsHuman")
+        userDefaults.set(value, forKey: CHOICE_HUMAN_VS_HUMAN_KEY)
     }
     static func getHumanVsHumanSetting() -> Bool {
         let userDefaults:UserDefaults = UserDefaults.standard
-        if (userDefaults.object(forKey: "choiceHumanVsHuman") == nil) {
+        if (userDefaults.object(forKey: CHOICE_HUMAN_VS_HUMAN_KEY) == nil) {
             return true
         } else {
-            return userDefaults.bool(forKey: "choiceHumanVsHuman")
+            return userDefaults.bool(forKey: CHOICE_HUMAN_VS_HUMAN_KEY)
         }
     }
     static func setMaxNbMatchesSettings(value:Int) {
         let userDefaults:UserDefaults = UserDefaults.standard
-        userDefaults.set(value, forKey: "maxNbMatches")
+        userDefaults.set(value, forKey: MAX_NB_MATCHES_KEY)
     }
     static func getMaxNbMatchesSettings() -> Int {
         let userDefaults:UserDefaults = UserDefaults.standard
-        var maxNbMatches:Int = userDefaults.integer(forKey: "maxNbMatches")
+        var maxNbMatches:Int = userDefaults.integer(forKey: MAX_NB_MATCHES_KEY)
 		// Sets the default value if not already set
         if (maxNbMatches == 0) {
             maxNbMatches = 20
@@ -204,11 +215,11 @@ class NIMGame {
     }
     static func setWhoPlaysFirst(value:Int) {
         let userDefaults:UserDefaults = UserDefaults.standard
-        userDefaults.set(value, forKey: "whoPlaysFirst")
+        userDefaults.set(value, forKey: WHO_PLAYS_FIRST_KEY)
     }
     static func getWhoPlaysFirst() -> Int {
         let userDefaults:UserDefaults = UserDefaults.standard
-        var whoPlaysFirst:Int = userDefaults.integer(forKey: "whoPlaysFirst")
+        var whoPlaysFirst:Int = userDefaults.integer(forKey: WHO_PLAYS_FIRST_KEY)
         // Sets the default value if not already set
         if (whoPlaysFirst == 0) {
             whoPlaysFirst = 1

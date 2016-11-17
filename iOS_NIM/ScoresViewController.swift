@@ -9,7 +9,15 @@
 import UIKit
 
 class ScoresViewController: UIViewController {
-
+    private var _game:NIMGame?
+    public var game:NIMGame? {
+        get {
+            return _game
+        }
+        set {
+            _game = newValue
+        }
+    }
     @IBOutlet weak var scoresTextView: UITextView!
     @IBAction func closeScores() {
         dismiss(animated: true, completion: nil)
@@ -22,17 +30,19 @@ class ScoresViewController: UIViewController {
             action in
             switch action.style{
             default:
-                NIMGame.resetScores()
+                if let currentGame = self._game {
+                    currentGame.resetScores()
+                }
                 self.setDisplay()
             }
         }))
     }
     private func setDisplay() {
-        let scores:[String:Int]? = NIMGame.getScores()
-        if (scores != nil) {
-            let scoresSorted = scores?.sorted{ $0.value > $1.value }
+        if let currentGame = _game,
+            let scores = currentGame.getScores() {
             scoresTextView.text = ""
-            for (key, value) in scoresSorted! {
+            let scoresSorted = scores.sorted(by: { $0.value > $1.value })
+            for (key, value) in scoresSorted {
                 scoresTextView.text = scoresTextView.text! + "\(key): \(value)\n"
             }
         } else {
