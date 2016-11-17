@@ -23,6 +23,17 @@ class NIMGame {
             return min(remainingMatches, NIMGame.maxRemovableMatches)
         }
     }
+    public var winnerName:String? {
+        get{
+            if isGameOver() {
+                if (currentPlayer == 1) {
+                    return NIMGame.getPlayer2Name()
+                } else {
+                    return NIMGame.getPlayer1Name()
+                }
+            }
+        }
+    }
     func newGame() {
         remainingMatches = NIMGame.getMaxNbMatchesSettings()
         NIMGame.maxMatches = NIMGame.getMaxNbMatchesSettings()

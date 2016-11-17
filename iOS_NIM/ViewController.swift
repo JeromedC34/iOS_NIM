@@ -43,6 +43,27 @@ class ViewController: UIViewController {
         myNIMGame?.play(nbMatchesSelected: Int(sliderNbMatches.value))
         setDisplay()
     }
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if identifier == "showSettingsSegue" {
+            if (myNIMGame?.hasStarted())! {
+                let alert = UIAlertController(title: "Change settings", message: "Your game will be restarted if you change any setting.\nDo you really want to do it?", preferredStyle: UIAlertControllerStyle.alert)
+                self.present(alert, animated: true, completion: nil)
+                alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: nil))
+                alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: {
+                    action in
+                    switch action.style{
+                    default:
+                        self.showSettings()
+                    }
+                }))
+                return false
+            } else {
+                return true
+            }
+        } else {
+            return true
+        }
+    }
     required init?(coder aDecoder: NSCoder) {
         myNIMGame = NIMGame()
         super.init(coder: aDecoder)
@@ -69,7 +90,7 @@ class ViewController: UIViewController {
         }
     }
     private func gameOver() {
-        let alert = UIAlertController(title: "Game over", message: "\((myNIMGame?.getCurrentPlayerName())!) has lost!", preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Game over", message: "\((myNIMGame?.winnerName)!) has won!", preferredStyle: UIAlertControllerStyle.alert)
         self.present(alert, animated: true, completion: nil)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: {
             action in
@@ -79,49 +100,26 @@ class ViewController: UIViewController {
             }
         }))
     }
-    @IBAction func displaySettings() {
-        if (myNIMGame?.hasStarted())! {
-            let alert = UIAlertController(title: "Change settings", message: "Your game will be restarted.\nDo you really want to do it?", preferredStyle: UIAlertControllerStyle.alert)
-            self.present(alert, animated: true, completion: nil)
-            alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.default, handler: nil))
-            alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: {
-                action in
-                switch action.style{
-                default:
-                    self.showSettings()
-                }
-            }))
-        } else {
-            showSettings()
-        }
-
-    }
     private func showSettings() {
-        let settingsVC = self.storyboard?.instantiateViewController(withIdentifier: "SettingsViewController")
-        if let navController = self.navigationController {
-            navController.pushViewController(settingsVC!, animated: true)
-        } else {
-            if (settingsVC != nil) {
-                present(settingsVC!, animated: true, completion: nil)
-            }
+        let settingsVC:SettingsViewController = self.storyboard?.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
+        if let currentNIMGame = myNIMGame {
+            settingsVC.setGame(myNIMGame: currentNIMGame)
         }
-    }
-    @IBAction func displayScores() {
-        let scoresVC = self.storyboard?.instantiateViewController(withIdentifier: "ScoresViewController")
-        if (scoresVC != nil) {
-            present(scoresVC!, animated: true, completion: nil)
+        if let navController = self.navigationController {
+            navController.pushViewController(settingsVC, animated: true)
         }
     }
     private func isHumanVsHuman() -> Bool {
         let userDefaults:UserDefaults = UserDefaults.standard
         return userDefaults.bool(forKey: "choiceHumanVsHuman")
     }
-    private func restartGame() {
+    func restartGame() {
         myNIMGame?.newGame()
         setDisplay(reset:true)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        restartGame()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -129,7 +127,6 @@ class ViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        restartGame()
+        setDisplay()
     }
 }
-

@@ -210,35 +210,16 @@
                                     <action selector="btnPlay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gNX-AM-Jco"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PyP-5i-921">
-                                <rect key="frame" x="155" y="575.5" width="64" height="30"/>
-                                <accessibility key="accessibilityConfiguration" identifier="settingsButton"/>
-                                <state key="normal" title="Réglages"/>
-                                <connections>
-                                    <action selector="displaySettings" destination="BYZ-38-t0r" eventType="touchUpInside" id="CtS-hA-MfZ"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vIc-GS-PZH">
-                                <rect key="frame" x="163" y="625.5" width="48" height="30"/>
-                                <accessibility key="accessibilityConfiguration" identifier="scoresButton"/>
-                                <state key="normal" title="Scores"/>
-                                <connections>
-                                    <segue destination="Un6-Ge-MVu" kind="show" id="kJx-cg-ncg"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="9C1-F5-NY2" firstAttribute="top" secondItem="xn5-9G-HRO" secondAttribute="bottom" constant="7" id="2ev-AQ-2ql"/>
-                            <constraint firstItem="vIc-GS-PZH" firstAttribute="centerX" secondItem="PyP-5i-921" secondAttribute="centerX" id="4Bj-q1-K9Z"/>
                             <constraint firstItem="2xy-SV-ol3" firstAttribute="top" secondItem="R45-71-Jtb" secondAttribute="bottom" constant="20" id="5GW-6g-F4L"/>
                             <constraint firstItem="7uK-Oh-kpS" firstAttribute="width" secondItem="xn5-9G-HRO" secondAttribute="width" id="5Pk-Qi-hOF"/>
-                            <constraint firstItem="PyP-5i-921" firstAttribute="centerX" secondItem="6s2-d3-nrc" secondAttribute="centerX" id="8YH-Wc-RKO"/>
                             <constraint firstItem="ApH-FO-1Vk" firstAttribute="top" secondItem="xn5-9G-HRO" secondAttribute="top" id="Dhi-0N-2bZ"/>
                             <constraint firstItem="R45-71-Jtb" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="F6t-rb-uoH"/>
                             <constraint firstItem="7uK-Oh-kpS" firstAttribute="top" secondItem="xn5-9G-HRO" secondAttribute="top" id="JBK-x6-6tf"/>
                             <constraint firstItem="6s2-d3-nrc" firstAttribute="top" secondItem="9C1-F5-NY2" secondAttribute="bottom" constant="20" id="LLp-Au-6uu"/>
-                            <constraint firstItem="PyP-5i-921" firstAttribute="top" secondItem="6s2-d3-nrc" secondAttribute="bottom" constant="20" id="PS1-d4-OH4"/>
                             <constraint firstItem="R45-71-Jtb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="PW8-8q-WUR"/>
                             <constraint firstItem="xn5-9G-HRO" firstAttribute="leading" secondItem="7uK-Oh-kpS" secondAttribute="trailing" constant="60" id="Wc2-S9-aKd"/>
                             <constraint firstItem="9C1-F5-NY2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="YcD-dy-XBK"/>
@@ -247,7 +228,6 @@
                             <constraint firstItem="ApH-FO-1Vk" firstAttribute="leading" secondItem="xn5-9G-HRO" secondAttribute="trailing" constant="60" id="k0x-cs-uPo"/>
                             <constraint firstItem="xn5-9G-HRO" firstAttribute="height" secondItem="ApH-FO-1Vk" secondAttribute="height" id="lOn-gT-I6r"/>
                             <constraint firstItem="7uK-Oh-kpS" firstAttribute="height" secondItem="xn5-9G-HRO" secondAttribute="height" id="lYZ-s0-3IC"/>
-                            <constraint firstItem="vIc-GS-PZH" firstAttribute="top" secondItem="PyP-5i-921" secondAttribute="bottom" constant="20" id="lt3-Ps-AQa"/>
                             <constraint firstItem="xn5-9G-HRO" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="oiS-2c-bON"/>
                             <constraint firstItem="9C1-F5-NY2" firstAttribute="trailing" secondItem="ApH-FO-1Vk" secondAttribute="trailing" id="p4o-tC-lOE"/>
                             <constraint firstItem="9C1-F5-NY2" firstAttribute="leading" secondItem="7uK-Oh-kpS" secondAttribute="leading" id="t0X-1T-ENs"/>
@@ -255,7 +235,30 @@
                             <constraint firstItem="xn5-9G-HRO" firstAttribute="width" secondItem="ApH-FO-1Vk" secondAttribute="width" id="zHH-qc-ckU"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="NIM game" id="cH5-ym-lHD"/>
+                    <navigationItem key="navigationItem" title="NIM game" id="cH5-ym-lHD">
+                        <barButtonItem key="leftBarButtonItem" id="mhU-ZY-nZM">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vIc-GS-PZH">
+                                <rect key="frame" x="16" y="7" width="48" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" identifier="scoresButton"/>
+                                <state key="normal" title="Scores"/>
+                                <connections>
+                                    <segue destination="Un6-Ge-MVu" kind="show" identifier="showScoresSegue" id="kJx-cg-ncg"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" id="ySx-lD-aXY">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="PyP-5i-921">
+                                <rect key="frame" x="295" y="7" width="64" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" identifier="settingsButton"/>
+                                <state key="normal" title="Réglages"/>
+                                <connections>
+                                    <segue destination="zwz-lI-VaB" kind="show" identifier="showSettingsSegue" id="7BV-1j-4bz"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="choiceHumanVsHuman" destination="B5r-yZ-f9j" id="kAb-uA-Pro"/>
                         <outlet property="chooseMatch1" destination="7uK-Oh-kpS" id="phX-YR-Vep"/>
@@ -432,7 +435,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0HI-mK-q59" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="790" y="36"/>
+            <point key="canvasLocation" x="850" y="36"/>
         </scene>
         <!--Scores-->
         <scene sceneID="A1o-CC-wxH">

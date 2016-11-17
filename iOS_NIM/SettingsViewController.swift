@@ -9,6 +9,8 @@
 import UIKit
 
 class SettingsViewController: UIViewController, UITextFieldDelegate {
+    private var hasChangedSettings:Bool = false
+    private var myNIMGame:NIMGame? = nil
     @IBOutlet weak var humanVsHumanSwitch: UISwitch!
     @IBOutlet weak var nbMaxMatches: UISegmentedControl!
     @IBOutlet weak var player1TextField: UITextField!
@@ -22,6 +24,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             action in
             switch action.style{
             default:
+                self.hasChangedSettings = true
                 NIMGame.resetSettings()
                 self.setDisplay()
             }
@@ -31,8 +34,12 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         setDisplay()
     }
     @IBAction func changeHumanVsHuman(_ sender: UISwitch) {
+        hasChangedSettings = true
         NIMGame.setHumanVsHumanSetting(value: sender.isOn)
         checkIA()
+    }
+    func setGame(myNIMGame:NIMGame) {
+        self.myNIMGame = myNIMGame
     }
     private func setDisplay() {
         humanVsHumanSwitch.isOn = NIMGame.getHumanVsHumanSetting()
@@ -56,6 +63,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         }
     }
     @IBAction func changeMaxNbMatches(_ sender: UISegmentedControl) {
+        hasChangedSettings = true
         let maxNbMatches:Int
         if (sender.selectedSegmentIndex == 0) {
             maxNbMatches = 10
@@ -65,18 +73,31 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         NIMGame.setMaxNbMatchesSettings(value: maxNbMatches)
     }
     @IBAction func changePlayer1Name(_ sender: UITextField) {
+        hasChangedSettings = true
         NIMGame.setPlayer1Name(value: sender.text!)
     }
     @IBAction func changePlayer2Name(_ sender: UITextField) {
+        hasChangedSettings = true
         NIMGame.setPlayer2Name(value: sender.text!)
     }
     @IBAction func changeWhoPlaysFirst(_ sender: UISegmentedControl) {
+        hasChangedSettings = true
         let whoPlaysFirst:Int
         whoPlaysFirst = sender.selectedSegmentIndex + 1
         NIMGame.setWhoPlaysFirst(value: whoPlaysFirst)
     }
     @IBAction func closeSettings() {
-        dismiss(animated: true, completion: nil)
+        if let navController = self.navigationController {
+            navController.popViewController(animated: true)
+        } else {
+            dismiss(animated: true, completion: nil)
+        }
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        if hasChangedSettings,
+            let myRunningGame = self.myNIMGame {
+            myRunningGame.newGame()
+        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
