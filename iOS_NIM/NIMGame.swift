@@ -145,9 +145,28 @@ class NIMGame {
         let range = max - min + 1
         return Int(arc4random_uniform(UInt32(range))) + min
     }
-    static func setPlayer1Name(value:String) {
+    private static func filterPlayerName(value:String) -> String {
+        return value.replacingOccurrences(of: " ", with: "_")
+    }
+    private static func filterPlayer1Name(value:String) -> String {
+        var result = filterPlayerName(value: value)
+        if (result == "") {
+            result = player1NameDefault
+        }
+        return result
+    }
+    private static func filterPlayer2Name(value:String) -> String {
+        var result = filterPlayerName(value: value)
+        if (result == "" || result == playerIAName) {
+            result = player2NameDefault
+        }
+        return result
+    }
+    static func setPlayer1Name(value:String) -> String {
         let userDefaults:UserDefaults = UserDefaults.standard
-        userDefaults.set(value, forKey: PLAYER_1_NAME_KEY)
+        let result = filterPlayer1Name(value:value)
+        userDefaults.set(result, forKey: PLAYER_1_NAME_KEY)
+        return result
     }
 	static func getPlayer1Name() -> String {
         let userDefaults:UserDefaults = UserDefaults.standard
@@ -160,9 +179,11 @@ class NIMGame {
         }
 		return playerName
 	}
-    static func setPlayer2Name(value:String) {
+    static func setPlayer2Name(value:String) -> String {
         let userDefaults:UserDefaults = UserDefaults.standard
-        userDefaults.set(value, forKey: PLAYER_2_NAME_KEY)
+        let result = filterPlayer2Name(value:value)
+        userDefaults.set(result, forKey: PLAYER_2_NAME_KEY)
+        return result
     }
     static func getPlayer2Name() -> String {
         let userDefaults:UserDefaults = UserDefaults.standard

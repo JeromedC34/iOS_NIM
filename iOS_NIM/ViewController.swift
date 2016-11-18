@@ -48,7 +48,7 @@ class ViewController: UIViewController {
     }
     private var _game:NIMGame
     private func setDisplay(reset:Bool = false) {
-        labelIndicator.text = "\(_game.getCurrentPlayerName()) - Remaining  \(_game.remainingMatches) matches"
+        labelIndicator.text = "\(_game.getCurrentPlayerName()) - Remaining \(_game.remainingMatches) matches"
         for i:Int in 0..<_game.limitMaxMatches {
             if (i >= _game.remainingMatches) {
                 remainingMatches[i].alpha = 0
@@ -93,6 +93,8 @@ class ViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let scoresVC = segue.destination as? ScoresViewController {
             scoresVC.game = _game
+        } else if let scoresTVC = segue.destination as? ScoresTableViewController {
+            scoresTVC.game = _game
         }
     }
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {

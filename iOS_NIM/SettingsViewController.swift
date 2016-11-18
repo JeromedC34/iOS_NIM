@@ -72,26 +72,11 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         }
         NIMGame.setMaxNbMatchesSettings(value: maxNbMatches)
     }
-    @IBAction func changePlayer1Name(_ sender: UITextField) {
-        hasChangedSettings = true
-        NIMGame.setPlayer1Name(value: sender.text!)
-    }
-    @IBAction func changePlayer2Name(_ sender: UITextField) {
-        hasChangedSettings = true
-        NIMGame.setPlayer2Name(value: sender.text!)
-    }
     @IBAction func changeWhoPlaysFirst(_ sender: UISegmentedControl) {
         hasChangedSettings = true
         let whoPlaysFirst:Int
         whoPlaysFirst = sender.selectedSegmentIndex + 1
         NIMGame.setWhoPlaysFirst(value: whoPlaysFirst)
-    }
-    @IBAction func closeSettings() {
-        if let navController = self.navigationController {
-            navController.popViewController(animated: true)
-        } else {
-            dismiss(animated: true, completion: nil)
-        }
     }
     override func viewWillDisappear(_ animated: Bool) {
         if hasChangedSettings,
@@ -107,8 +92,12 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
         switch (textField.tag) {
-        case 1, 2:
-            textField.text = textField.text?.replacingOccurrences(of: " ", with: "_")
+        case 1:
+            hasChangedSettings = true
+            textField.text = NIMGame.setPlayer1Name(value: textField.text!)
+        case 2:
+            hasChangedSettings = true
+            textField.text = NIMGame.setPlayer2Name(value: textField.text!)
         default: break
             // RAS
         }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		881FEA121DDEF9B400C7692A /* ScoresTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881FEA111DDEF9B400C7692A /* ScoresTableViewController.swift */; };
 		8825F5F51DD9C2F3006C3CEA /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8825F5F41DD9C2F3006C3CEA /* SettingsViewController.swift */; };
 		8825F5F71DDB0CA5006C3CEA /* ScoresViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8825F5F61DDB0CA5006C3CEA /* ScoresViewController.swift */; };
 		88F63E8D1DD4662800B618C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F63E8C1DD4662800B618C1 /* AppDelegate.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		881FEA111DDEF9B400C7692A /* ScoresTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoresTableViewController.swift; sourceTree = "<group>"; };
 		8825F5F41DD9C2F3006C3CEA /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		8825F5F61DDB0CA5006C3CEA /* ScoresViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoresViewController.swift; sourceTree = "<group>"; };
 		88F63E891DD4662800B618C1 /* iOS_NIM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOS_NIM.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -112,6 +114,7 @@
 				88F63E981DD4662800B618C1 /* Info.plist */,
 				8825F5F41DD9C2F3006C3CEA /* SettingsViewController.swift */,
 				8825F5F61DDB0CA5006C3CEA /* ScoresViewController.swift */,
+				881FEA111DDEF9B400C7692A /* ScoresTableViewController.swift */,
 			);
 			path = iOS_NIM;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 			files = (
 				88F63EBF1DD4752400B618C1 /* NIMGame.swift in Sources */,
 				8825F5F71DDB0CA5006C3CEA /* ScoresViewController.swift in Sources */,
+				881FEA121DDEF9B400C7692A /* ScoresTableViewController.swift in Sources */,
 				88F63E8F1DD4662800B618C1 /* ViewController.swift in Sources */,
 				88F63E8D1DD4662800B618C1 /* AppDelegate.swift in Sources */,
 				8825F5F51DD9C2F3006C3CEA /* SettingsViewController.swift in Sources */,

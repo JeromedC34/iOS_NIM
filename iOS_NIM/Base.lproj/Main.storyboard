@@ -25,7 +25,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JnG-tx-n0k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-874" y="36"/>
+            <point key="canvasLocation" x="-575" y="36"/>
         </scene>
         <!--NIM game-->
         <scene sceneID="tne-QT-ifu">
@@ -47,7 +47,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2xy-SV-ol3" userLabel="Matches available">
-                                <rect key="frame" x="38" y="124.5" width="300" height="194"/>
+                                <rect key="frame" x="37.5" y="124.5" width="300" height="194"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="match.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="tMv-kq-h6u">
                                         <rect key="frame" x="0.0" y="0.0" width="15" height="194"/>
@@ -243,7 +243,7 @@
                                 <accessibility key="accessibilityConfiguration" identifier="scoresButton"/>
                                 <state key="normal" title="Scores"/>
                                 <connections>
-                                    <segue destination="Un6-Ge-MVu" kind="show" identifier="showScoresSegue" id="kJx-cg-ncg"/>
+                                    <segue destination="kPW-pS-O9o" kind="show" identifier="showScoresListSegue" id="1Md-NR-e0N"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -354,9 +354,6 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="changePlayer1Name:" destination="zwz-lI-VaB" eventType="editingDidEnd" id="NsC-ib-hgv"/>
-                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2kY-wC-XBX">
                                 <rect key="frame" x="238" y="203" width="121" height="30"/>
@@ -364,9 +361,6 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="changePlayer2Name:" destination="zwz-lI-VaB" eventType="editingDidEnd" id="DBo-XH-Ark"/>
-                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Who plays first?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uc6-Km-Eoz">
                                 <rect key="frame" x="16" y="246.5" width="122" height="21"/>
@@ -435,54 +429,58 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0HI-mK-q59" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="850" y="36"/>
+            <point key="canvasLocation" x="815" y="36"/>
         </scene>
         <!--Scores-->
-        <scene sceneID="A1o-CC-wxH">
+        <scene sceneID="kkq-Yv-vIr">
             <objects>
-                <viewController storyboardIdentifier="ScoresViewController" id="Un6-Ge-MVu" customClass="ScoresViewController" customModule="iOS_NIM" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="okX-7p-sMx"/>
-                        <viewControllerLayoutGuide type="bottom" id="mH4-sv-QlR"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Oku-20-CSc">
+                <tableViewController id="kPW-pS-O9o" customClass="ScoresTableViewController" customModule="iOS_NIM" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="cwV-cC-jy4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6hb-ZB-rtf">
-                                <rect key="frame" x="143.5" y="637" width="89" height="30"/>
-                                <accessibility key="accessibilityConfiguration" identifier="clearScoresButton"/>
-                                <state key="normal" title="Reset scores"/>
-                                <connections>
-                                    <action selector="resetScores" destination="Un6-Ge-MVu" eventType="touchUpInside" id="vPH-de-TkU"/>
-                                </connections>
-                            </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="uhF-wY-SJ1">
-                                <rect key="frame" x="16" y="84" width="343" height="533"/>
-                                <color key="backgroundColor" white="0.9485633389261745" alpha="1" colorSpace="calibratedWhite"/>
-                                <accessibility key="accessibilityConfiguration" identifier="scoresTextView"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="6hb-ZB-rtf" firstAttribute="top" secondItem="uhF-wY-SJ1" secondAttribute="bottom" constant="20" id="1Wt-xJ-rBz"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="uhF-wY-SJ1" secondAttribute="trailing" id="9xD-zG-U4m"/>
-                            <constraint firstItem="uhF-wY-SJ1" firstAttribute="leading" secondItem="Oku-20-CSc" secondAttribute="leadingMargin" id="GEK-xl-VkF"/>
-                            <constraint firstItem="mH4-sv-QlR" firstAttribute="top" secondItem="6hb-ZB-rtf" secondAttribute="bottom" id="NuK-fk-glK"/>
-                            <constraint firstItem="6hb-ZB-rtf" firstAttribute="centerX" secondItem="Oku-20-CSc" secondAttribute="centerX" id="TKx-hW-eC6"/>
-                            <constraint firstItem="uhF-wY-SJ1" firstAttribute="top" secondItem="okX-7p-sMx" secondAttribute="bottom" constant="20" id="jlP-ZH-jXm"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Scores" id="MkT-xv-d7o"/>
-                    <connections>
-                        <outlet property="scoresTextView" destination="uhF-wY-SJ1" id="X0w-v5-RLj"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="TPu-gt-bTI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="score-cell" textLabel="yqt-OM-blq" detailTextLabel="g9f-ox-Wdi" style="IBUITableViewCellStyleValue1" id="LoH-Cq-sJA">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LoH-Cq-sJA" id="PYb-RI-F4q">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yqt-OM-blq">
+                                            <rect key="frame" x="15" y="11" width="34" height="21"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="g9f-ox-Wdi">
+                                            <rect key="frame" x="316" y="11" width="44" height="21"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="kPW-pS-O9o" id="SMP-QE-Bo0"/>
+                            <outlet property="delegate" destination="kPW-pS-O9o" id="Wd7-xQ-3zf"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Scores" id="OHu-h6-clW">
+                        <barButtonItem key="rightBarButtonItem" title="Reset scores" id="Jtl-FS-uVu">
+                            <connections>
+                                <action selector="resetScores:" destination="kPW-pS-O9o" id="0qE-fw-yEc"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8nT-Wc-Dja" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="121" y="748"/>
+            <point key="canvasLocation" x="121" y="723"/>
         </scene>
     </scenes>
     <resources>
