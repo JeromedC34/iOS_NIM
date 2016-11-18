@@ -91,9 +91,7 @@ class ViewController: UIViewController {
         setDisplay(reset:true)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let scoresVC = segue.destination as? ScoresViewController {
-            scoresVC.game = _game
-        } else if let scoresTVC = segue.destination as? ScoresTableViewController {
+        if let scoresTVC = segue.destination as? ScoresTableViewController {
             scoresTVC.game = _game
         }
     }
