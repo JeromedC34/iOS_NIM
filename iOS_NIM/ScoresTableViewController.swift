@@ -77,7 +77,7 @@ class ScoresTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "score-cell", for: indexPath)
         if let scoreLine = _list?[indexPath.row] {
             cell.textLabel?.text = scoreLine.key
-          //  cell.detailTextLabel?.text = "Score: \(scoreLine.value)"
+            cell.detailTextLabel?.text = "Score: \(scoreLine.value)"
         }
         return cell
     }
