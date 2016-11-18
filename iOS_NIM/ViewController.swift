@@ -10,20 +10,15 @@ import UIKit
 
 class ViewController: UIViewController {
     @IBOutlet weak var labelIndicator: UILabel!
-    @IBOutlet weak var chooseMatch1: UIImageView!
-    @IBOutlet weak var chooseMatch2: UIImageView!
-    @IBOutlet weak var chooseMatch3: UIImageView!
     @IBOutlet var remainingMatches: [UIImageView]!
     @IBOutlet weak var sliderNbMatches: UISlider!
     @IBOutlet weak var choiceHumanVsHuman: UISwitch!
+    @IBOutlet weak var playButton: UIButton!
     @IBAction func sliderChangeNbMatches(_ sender: UISlider) {
         let roundedValue = round(sender.value)
         sender.value = roundedValue
         switch (roundedValue) {
         case 1:
-            chooseMatch1.isHidden = false
-            chooseMatch2.isHidden = true
-            chooseMatch3.isHidden = true
             remainingMatches[_game.remainingMatches - 1].alpha = 0.5
             if _game.remainingMatches >= 2 {
                 remainingMatches[_game.remainingMatches - 2].alpha = 1
@@ -32,25 +27,21 @@ class ViewController: UIViewController {
                 remainingMatches[_game.remainingMatches - 3].alpha = 1
             }
         case 2:
-            chooseMatch1.isHidden = false
-            chooseMatch2.isHidden = false
-            chooseMatch3.isHidden = true
             remainingMatches[_game.remainingMatches - 1].alpha = 0.5
             remainingMatches[_game.remainingMatches - 2].alpha = 0.5
             if _game.remainingMatches >= 3 {
                 remainingMatches[_game.remainingMatches - 3].alpha = 1
             }
         case 3:
-            chooseMatch1.isHidden = false
-            chooseMatch2.isHidden = false
-            chooseMatch3.isHidden = false
             remainingMatches[_game.remainingMatches - 1].alpha = 0.5
             remainingMatches[_game.remainingMatches - 2].alpha = 0.5
             remainingMatches[_game.remainingMatches - 3].alpha = 0.5
-        default:
-            chooseMatch1.isHidden = true
-            chooseMatch2.isHidden = true
-            chooseMatch3.isHidden = true
+        default: break
+        }
+        if (roundedValue == 1) {
+            playButton.setTitle("Remove \(Int(roundedValue)) match", for: .normal)
+        } else {
+            playButton.setTitle("Remove \(Int(roundedValue)) matches", for: .normal)
         }
     }
     @IBAction func btnPlay(_ sender: UIButton) {
@@ -142,10 +133,10 @@ class ViewController: UIViewController {
                         self.showSettings()
                     }
                 }))
-                return false
             } else {
-                return true
+                self.showSettings()
             }
+            return false
         } else {
             return true
         }

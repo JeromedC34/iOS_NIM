@@ -25,7 +25,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             switch action.style{
             default:
                 self.hasChangedSettings = true
-                NIMGame.resetSettings()
+                self._game!.resetSettings()
                 self.setDisplay()
             }
         }))
@@ -35,31 +35,31 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     }
     @IBAction func changeHumanVsHuman(_ sender: UISwitch) {
         hasChangedSettings = true
-        NIMGame.setHumanVsHumanSetting(value: sender.isOn)
+        _game!.setHumanVsHumanSetting(value: sender.isOn)
         checkIA()
     }
     func setGame(game:NIMGame) {
-        self._game = game
+        _game = game
     }
     private func setDisplay() {
-        humanVsHumanSwitch.isOn = NIMGame.getHumanVsHumanSetting()
-        if (NIMGame.getMaxNbMatchesSettings() == 10) {
+        humanVsHumanSwitch.isOn = _game!.getHumanVsHumanSetting()
+        if (_game!.getMaxNbMatchesSettings() == 10) {
             nbMaxMatches.selectedSegmentIndex = 0
         } else {
             nbMaxMatches.selectedSegmentIndex = 1
         }
-        player1TextField.text = NIMGame.getPlayer1Name()
-        player2TextField.text = NIMGame.getPlayer2Name()
-        whoPlaysFirst.selectedSegmentIndex = NIMGame.getWhoPlaysFirst() - 1
+        player1TextField.text = _game!.getPlayer1Name()
+        player2TextField.text = _game!.getPlayer2Name()
+        whoPlaysFirst.selectedSegmentIndex = _game!.getWhoPlaysFirst() - 1
         checkIA()
     }
     private func checkIA() {
-        if (NIMGame.getHumanVsHumanSetting()) {
+        if (_game!.getHumanVsHumanSetting()) {
             player2TextField.isEnabled = true
-            player2TextField.text = NIMGame.getPlayer2Name()
+            player2TextField.text = _game!.getPlayer2Name()
         } else {
             player2TextField.isEnabled = false
-            player2TextField.text = NIMGame.getPlayer2Name()
+            player2TextField.text = _game!.getPlayer2Name()
         }
     }
     @IBAction func changeMaxNbMatches(_ sender: UISegmentedControl) {
@@ -70,17 +70,17 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         } else {
             maxNbMatches = 20
         }
-        NIMGame.setMaxNbMatchesSettings(value: maxNbMatches)
+        _game!.setMaxNbMatchesSettings(value: maxNbMatches)
     }
     @IBAction func changeWhoPlaysFirst(_ sender: UISegmentedControl) {
         hasChangedSettings = true
         let whoPlaysFirst:Int
         whoPlaysFirst = sender.selectedSegmentIndex + 1
-        NIMGame.setWhoPlaysFirst(value: whoPlaysFirst)
+        _game!.setWhoPlaysFirst(value: whoPlaysFirst)
     }
     override func viewWillDisappear(_ animated: Bool) {
         if hasChangedSettings,
-            let myRunningGame = self._game {
+            let myRunningGame = _game {
             myRunningGame.newGame()
         }
     }
@@ -94,14 +94,15 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         switch (textField.tag) {
         case 1:
             hasChangedSettings = true
-            textField.text = NIMGame.setPlayer1Name(value: textField.text!)
+            textField.text = _game!.setPlayer1Name(value: textField.text!)
         case 2:
             hasChangedSettings = true
-            textField.text = NIMGame.setPlayer2Name(value: textField.text!)
+            textField.text = _game!.setPlayer2Name(value: textField.text!)
         default: break
             // RAS
         }
     }
+
     /*
     // MARK: - Navigation
 
