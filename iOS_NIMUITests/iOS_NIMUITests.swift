@@ -41,6 +41,7 @@ class iOS_NIMUITests: XCTestCase {
         let switchHVHOn = app.switches["1"]
         let switchHVHOff = app.switches["0"]
         let tablesQuery = XCUIApplication().tables
+        XCUIDevice.shared().orientation = .portrait
 
         app.buttons["settingsButton"].tap()
         app.buttons["resetSettingsButton"].tap()
