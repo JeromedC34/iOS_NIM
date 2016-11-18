@@ -40,6 +40,7 @@ class iOS_NIMUITests: XCTestCase {
         let changeSettingsAlert = app.alerts["Change settings"]
         let switchHVHOn = app.switches["1"]
         let switchHVHOff = app.switches["0"]
+        let tablesQuery = XCUIApplication().tables
 
         app.buttons["settingsButton"].tap()
         app.buttons["resetSettingsButton"].tap()
@@ -53,8 +54,9 @@ class iOS_NIMUITests: XCTestCase {
         
         app.navigationBars["Settings"].buttons["NIM game"].tap()
         app.buttons["scoresButton"].tap()
-        app.buttons["clearScoresButton"].tap()
+        app.navigationBars["Scores"].buttons["Reset scores"].tap()
         app.alerts["Reset scores"].buttons["Yes"].tap()
+        XCTAssertFalse(tablesQuery.cells.element(boundBy: 0).exists)
         app.navigationBars["Scores"].buttons["NIM game"].tap()
         
         XCTAssertEqual(app.staticTexts["labelGameState"].label, "Player 1 - Remaining 20 matches")
@@ -96,7 +98,10 @@ class iOS_NIMUITests: XCTestCase {
         playButton.tap()
         app.alerts["Game over"].buttons["Ok"].tap()
         app.buttons["scoresButton"].tap()
-        XCTAssertEqual(app.textViews["scoresTextView"].value as! String, "Player 2: 10\nPlayer 1: 0\n")
+        XCTAssertTrue(tablesQuery.cells.element(boundBy: 0).staticTexts["Player 2"].exists)
+        XCTAssertTrue(tablesQuery.cells.element(boundBy: 0).staticTexts["Score: 10"].exists)
+        XCTAssertTrue(tablesQuery.cells.element(boundBy: 1).staticTexts["Player 1"].exists)
+        XCTAssertTrue(tablesQuery.cells.element(boundBy: 1).staticTexts["Score: 0"].exists)
         app.navigationBars["Scores"].buttons["NIM game"].tap()
         playButton.tap()
         playButton.tap()
@@ -107,7 +112,10 @@ class iOS_NIMUITests: XCTestCase {
         playButton.tap()
         app.alerts["Game over"].buttons["Ok"].tap()
         app.buttons["scoresButton"].tap()
-        XCTAssertEqual(app.textViews["scoresTextView"].value as! String, "Player 2: 20\nPlayer 1: 0\n")
+        XCTAssertTrue(tablesQuery.cells.element(boundBy: 0).staticTexts["Player 2"].exists)
+        XCTAssertTrue(tablesQuery.cells.element(boundBy: 0).staticTexts["Score: 20"].exists)
+        XCTAssertTrue(tablesQuery.cells.element(boundBy: 1).staticTexts["Player 1"].exists)
+        XCTAssertTrue(tablesQuery.cells.element(boundBy: 1).staticTexts["Score: 0"].exists)
         
         /*
          app.buttons["10"].tap()
