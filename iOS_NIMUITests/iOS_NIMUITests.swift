@@ -33,6 +33,13 @@ class iOS_NIMUITests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         
         let app = XCUIApplication()
+        let playButton = app.buttons["playButton"]
+        let slider100 = app.sliders["100%"]
+        let slider50 = app.sliders["50%"]
+        let slider0 = app.sliders["0%"]
+        let changeSettingsAlert = app.alerts["Change settings"]
+        let switchHVHOn = app.switches["1"]
+        let switchHVHOff = app.switches["0"]
 
         app.buttons["settingsButton"].tap()
         app.buttons["resetSettingsButton"].tap()
@@ -50,35 +57,36 @@ class iOS_NIMUITests: XCTestCase {
         app.alerts["Reset scores"].buttons["Yes"].tap()
         app.navigationBars["Scores"].buttons["NIM game"].tap()
         
-        let playButton = app.buttons["playButton"]
-        
-        XCTAssertTrue(app.staticTexts["labelGameState"].label == "Player 1 - Remaining 20 matches")
+        XCTAssertEqual(app.staticTexts["labelGameState"].label, "Player 1 - Remaining 20 matches")
         playButton.tap()
-        XCTAssertTrue(app.staticTexts["labelGameState"].label == "Player 2 - Remaining 17 matches")
+        XCTAssertEqual(app.staticTexts["labelGameState"].label, "Player 2 - Remaining 17 matches")
         playButton.tap()
-        XCTAssertTrue(app.staticTexts["labelGameState"].label == "Player 1 - Remaining 14 matches")
-        let slider100 = app.sliders["100%"]
-        let slider50 = app.sliders["50%"]
-        let slider0 = app.sliders["0%"]
+        XCTAssertEqual(app.staticTexts["labelGameState"].label, "Player 1 - Remaining 14 matches")
         slider100.adjust(toNormalizedSliderPosition: 0.5)
         playButton.tap()
-        XCTAssertTrue(app.staticTexts["labelGameState"].label == "Player 2 - Remaining 12 matches")
+        XCTAssertEqual(app.staticTexts["labelGameState"].label, "Player 2 - Remaining 12 matches")
         playButton.tap()
-        XCTAssertTrue(app.staticTexts["labelGameState"].label == "Player 1 - Remaining 10 matches")
+        XCTAssertEqual(app.staticTexts["labelGameState"].label, "Player 1 - Remaining 10 matches")
         slider50.adjust(toNormalizedSliderPosition: 0)
         playButton.tap()
-        XCTAssertTrue(app.staticTexts["labelGameState"].label == "Player 2 - Remaining 9 matches")
+        XCTAssertEqual(app.staticTexts["labelGameState"].label, "Player 2 - Remaining 9 matches")
         playButton.tap()
-        XCTAssertTrue(app.staticTexts["labelGameState"].label == "Player 1 - Remaining 8 matches")
-        slider0.adjust(toNormalizedSliderPosition: 0.5)
-        
-        let changeSettingsAlert = app.alerts["Change settings"]
+        XCTAssertEqual(app.staticTexts["labelGameState"].label, "Player 1 - Remaining 8 matches")
+        slider0.adjust(toNormalizedSliderPosition: 1)
         app.buttons["settingsButton"].tap()
         changeSettingsAlert.buttons["No"].tap()
         app.buttons["settingsButton"].tap()
         changeSettingsAlert.buttons["Yes"].tap()
         app.navigationBars["Settings"].buttons["NIM game"].tap()
-        XCTAssertTrue(app.staticTexts["labelGameState"].label == "Player 1 - Remaining 20 matches")
+        XCTAssertEqual(app.staticTexts["labelGameState"].label, "Player 1 - Remaining 8 matches")
+        app.buttons["settingsButton"].tap()
+        changeSettingsAlert.buttons["Yes"].tap()
+        switchHVHOn.tap()
+        app.navigationBars["Settings"].buttons["NIM game"].tap()
+        XCTAssertEqual(app.staticTexts["labelGameState"].label, "Player 1 - Remaining 20 matches")
+        app.buttons["settingsButton"].tap()
+        switchHVHOff.tap()
+        app.navigationBars["Settings"].buttons["NIM game"].tap()
         playButton.tap()
         playButton.tap()
         playButton.tap()
@@ -88,7 +96,7 @@ class iOS_NIMUITests: XCTestCase {
         playButton.tap()
         app.alerts["Game over"].buttons["Ok"].tap()
         app.buttons["scoresButton"].tap()
-        XCTAssertTrue(app.textViews["scoresTextView"].value as! String == "Player 2: 10\nPlayer 1: 0\n")
+        XCTAssertEqual(app.textViews["scoresTextView"].value as! String, "Player 2: 10\nPlayer 1: 0\n")
         app.navigationBars["Scores"].buttons["NIM game"].tap()
         playButton.tap()
         playButton.tap()
@@ -99,11 +107,9 @@ class iOS_NIMUITests: XCTestCase {
         playButton.tap()
         app.alerts["Game over"].buttons["Ok"].tap()
         app.buttons["scoresButton"].tap()
-        XCTAssertTrue(app.textViews["scoresTextView"].value as! String == "Player 2: 20\nPlayer 1: 0\n")
+        XCTAssertEqual(app.textViews["scoresTextView"].value as! String, "Player 2: 20\nPlayer 1: 0\n")
         
         /*
-         let switch2 = app.switches["1"]
-         switch2.tap()
          app.buttons["10"].tap()
          app.switches["0"].tap()
          app.scrollViews.otherElements.icons["iOS_NIM"].tap()
