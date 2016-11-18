@@ -24,14 +24,29 @@ class ViewController: UIViewController {
             chooseMatch1.isHidden = false
             chooseMatch2.isHidden = true
             chooseMatch3.isHidden = true
+            remainingMatches[_game.remainingMatches - 1].alpha = 0.5
+            if _game.remainingMatches >= 2 {
+                remainingMatches[_game.remainingMatches - 2].alpha = 1
+            }
+            if _game.remainingMatches >= 3 {
+                remainingMatches[_game.remainingMatches - 3].alpha = 1
+            }
         case 2:
             chooseMatch1.isHidden = false
             chooseMatch2.isHidden = false
             chooseMatch3.isHidden = true
+            remainingMatches[_game.remainingMatches - 1].alpha = 0.5
+            remainingMatches[_game.remainingMatches - 2].alpha = 0.5
+            if _game.remainingMatches >= 3 {
+                remainingMatches[_game.remainingMatches - 3].alpha = 1
+            }
         case 3:
             chooseMatch1.isHidden = false
             chooseMatch2.isHidden = false
             chooseMatch3.isHidden = false
+            remainingMatches[_game.remainingMatches - 1].alpha = 0.5
+            remainingMatches[_game.remainingMatches - 2].alpha = 0.5
+            remainingMatches[_game.remainingMatches - 3].alpha = 0.5
         default:
             chooseMatch1.isHidden = true
             chooseMatch2.isHidden = true
@@ -62,6 +77,25 @@ class ViewController: UIViewController {
         }
         if (reset) {
             sliderNbMatches.value = Float(_game.maxInput)
+        }
+        if sliderNbMatches.value == 3 {
+            remainingMatches[_game.remainingMatches - 1].alpha = 0.5
+            remainingMatches[_game.remainingMatches - 2].alpha = 0.5
+            remainingMatches[_game.remainingMatches - 3].alpha = 0.5
+        } else if sliderNbMatches.value == 2 {
+            remainingMatches[_game.remainingMatches - 1].alpha = 0.5
+            remainingMatches[_game.remainingMatches - 2].alpha = 0.5
+            if _game.remainingMatches >= 3 {
+                remainingMatches[_game.remainingMatches - 3].alpha = 1
+            }
+        } else if sliderNbMatches.value == 1 {
+            remainingMatches[_game.remainingMatches - 1].alpha = 0.5
+            if _game.remainingMatches >= 2 {
+                remainingMatches[_game.remainingMatches - 2].alpha = 1
+            }
+            if _game.remainingMatches >= 3 {
+                remainingMatches[_game.remainingMatches - 3].alpha = 1
+            }
         }
         sliderChangeNbMatches(sliderNbMatches)
         if (_game.isGameOver()) {
