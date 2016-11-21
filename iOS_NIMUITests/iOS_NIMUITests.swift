@@ -28,7 +28,21 @@ class iOS_NIMUITests: XCTestCase {
         super.tearDown()
     }
 
-    func testExample() {
+    func testSliderLandscape() {
+        let app = XCUIApplication()
+        let playButton = app.buttons["playButton"]
+        let slider100 = app.sliders["100%"]
+        XCUIDevice.shared().orientation = .landscapeLeft
+        let vector1:CGVector = CGVectorFromString("0,0")
+        let vector2:CGVector = CGVectorFromString("-400,0")
+        let startPoint = slider100.coordinate(withNormalizedOffset: vector1) // center of the element
+        let finishPoint = startPoint.withOffset(vector2)
+        startPoint.press(forDuration: 0, thenDragTo: finishPoint)
+        
+        XCTAssertEqual(playButton.label, "Remove 2 matches")
+    }
+
+    func testMain() {
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         
